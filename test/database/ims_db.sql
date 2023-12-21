@@ -1,18 +1,24 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2022 at 10:21 AM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.5
+-- Generation Time: Dec 21, 2023 at 09:41 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
--- Database: `test_db`
+-- Database: `interview_test`
 --
 
 -- --------------------------------------------------------
@@ -26,22 +32,14 @@ CREATE TABLE `test_brand` (
   `categoryid` int(11) NOT NULL,
   `bname` varchar(250) NOT NULL,
   `status` enum('active','inactive') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `test_brand`
 --
 
 INSERT INTO `test_brand` (`id`, `categoryid`, `bname`, `status`) VALUES
-(1, 2, 'Brand 1', 'active'),
-(2, 2, 'Brand 2', 'active'),
-(3, 2, 'Brand 3', 'active'),
-(4, 1, 'Brand 201', 'active'),
-(5, 1, 'Brand 202', 'active'),
-(6, 1, 'Brand 203', 'active'),
-(7, 3, 'Brand 301', 'active'),
-(8, 3, 'Brand 302', 'active'),
-(9, 3, 'Brand 303', 'active');
+(10, 1, 'Indofood', 'active');
 
 -- --------------------------------------------------------
 
@@ -53,16 +51,14 @@ CREATE TABLE `test_category` (
   `categoryid` int(11) NOT NULL,
   `name` varchar(250) NOT NULL,
   `status` enum('active','inactive') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `test_category`
 --
 
 INSERT INTO `test_category` (`categoryid`, `name`, `status`) VALUES
-(1, 'Smartphone', 'active'),
-(2, 'Random Item', 'active'),
-(3, 'Speaker', 'active');
+(1, 'makanan', 'active');
 
 -- --------------------------------------------------------
 
@@ -76,15 +72,15 @@ CREATE TABLE `test_customer` (
   `address` text NOT NULL,
   `mobile` int(50) NOT NULL,
   `balance` double(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `test_customer`
 --
 
 INSERT INTO `test_customer` (`id`, `name`, `address`, `mobile`, `balance`) VALUES
-(1, 'Mark Cooper', 'Sample Address', 2147483647, 25000.00),
-(2, 'George Wilson', '2306 St, Here There', 2147483647, 35000.00);
+(1, 'naufal', 'jalan jalan aja', 2147483647, 25000.00),
+(2, 'babuy', 'jalan jalan terus', 2147483647, 35000.00);
 
 -- --------------------------------------------------------
 
@@ -98,15 +94,7 @@ CREATE TABLE `test_order` (
   `total_shipped` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `order_date` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `test_order`
---
-
-INSERT INTO `test_order` (`order_id`, `product_id`, `total_shipped`, `customer_id`, `order_date`) VALUES
-(1, '1', 5, 1, '2022-06-20 08:20:40'),
-(2, '2', 3, 2, '2022-06-20 08:20:48');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -129,16 +117,14 @@ CREATE TABLE `test_product` (
   `supplier` int(11) NOT NULL,
   `status` enum('active','inactive') NOT NULL,
   `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `test_product`
 --
 
 INSERT INTO `test_product` (`pid`, `categoryid`, `brandid`, `pname`, `model`, `description`, `quantity`, `unit`, `base_price`, `tax`, `minimum_order`, `supplier`, `status`, `date`) VALUES
-(1, 2, 1, 'Product 101', 'P-1001', 'usce auctor faucibus efficitur.', 10, 'Bottles', 500.00, '12.00', 1.00, 1, 'active', '0000-00-00'),
-(2, 1, 4, 'Product 102', 'P-1002', 'Proin vehicula mi pulvinar ipsum ornare tincidunt.', 15, 'Box', 7500.00, '12.00', 1.00, 2, 'active', '0000-00-00'),
-(3, 3, 7, 'Product 103', 'P-1003', 'Integer interdum, odio eget mattis venenatis', 20, 'Bags', 350.00, '12.00', 1.00, 3, 'active', '0000-00-00');
+(4, 1, 10, 'Kecap Bango', 'kecap', '', 10000, 'Bottles', 1000000.00, 0.00, 1.00, 4, 'active', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -152,16 +138,7 @@ CREATE TABLE `test_purchase` (
   `product_id` varchar(255) NOT NULL,
   `quantity` varchar(255) NOT NULL,
   `purchase_date` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `test_purchase`
---
-
-INSERT INTO `test_purchase` (`purchase_id`, `supplier_id`, `product_id`, `quantity`, `purchase_date`) VALUES
-(1, '1', '1', '25', '2022-06-20 08:20:07'),
-(2, '2', '2', '35', '2022-06-20 08:20:14'),
-(3, '3', '3', '10', '2022-06-20 08:20:29');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -175,16 +152,15 @@ CREATE TABLE `test_supplier` (
   `mobile` varchar(50) NOT NULL,
   `address` text NOT NULL,
   `status` enum('active','inactive') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `test_supplier`
 --
 
 INSERT INTO `test_supplier` (`supplier_id`, `supplier_name`, `mobile`, `address`, `status`) VALUES
-(1, 'Supplier 101', '09645987123', 'Over Here', 'active'),
-(2, 'Supplier 102', '094568791252', 'Over There', 'active'),
-(3, 'Supplier 103', '09789897879', 'Anywhere There', 'active');
+(4, 'Asyam', '08131221', 'jalan celana goyang', 'active'),
+(5, 'awa', '08222222', 'jalan aja ga serius', 'active');
 
 -- --------------------------------------------------------
 
@@ -199,14 +175,15 @@ CREATE TABLE `test_user` (
   `name` varchar(200) NOT NULL,
   `type` enum('admin','member') NOT NULL,
   `status` enum('Active','Inactive') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `test_user`
 --
 
 INSERT INTO `test_user` (`userid`, `email`, `password`, `name`, `type`, `status`) VALUES
-(1, 'admin@mail.com', '0192023a7bbd73250516f069df18b500', 'Administrator', 'admin', 'Active');
+(1, 'admin@mail.com', '0192023a7bbd73250516f069df18b500', 'Administrator', 'admin', 'Active'),
+(2, 'admin@gudang', '4297f44b13955235245b2497399d7a93', '', 'admin', 'Active');
 
 --
 -- Indexes for dumped tables
@@ -268,7 +245,7 @@ ALTER TABLE `test_user`
 -- AUTO_INCREMENT for table `test_brand`
 --
 ALTER TABLE `test_brand`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `test_category`
@@ -292,7 +269,7 @@ ALTER TABLE `test_order`
 -- AUTO_INCREMENT for table `test_product`
 --
 ALTER TABLE `test_product`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `test_purchase`
@@ -304,7 +281,7 @@ ALTER TABLE `test_purchase`
 -- AUTO_INCREMENT for table `test_supplier`
 --
 ALTER TABLE `test_supplier`
-  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `test_user`
@@ -312,3 +289,7 @@ ALTER TABLE `test_supplier`
 ALTER TABLE `test_user`
   MODIFY `userid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
